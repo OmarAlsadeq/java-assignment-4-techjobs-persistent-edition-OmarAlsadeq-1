@@ -13,22 +13,22 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("skill")
+@RequestMapping("skills")
 public class SkillController {
     @Autowired
     private SkillRepository skillRepository;
 
-    @GetMapping("skill")
+    @GetMapping("")
     public String index(Model model){
-        model.addAttribute("skill", skillRepository.findAll());
-        return "skill/index";
+        model.addAttribute("skills", skillRepository.findAll());
+        return "skills/index";
     }
 
 
     @GetMapping("add")
     public String displayAddSkillForm(Model model) {
         model.addAttribute(new Skill());
-        return "skill/add";
+        return "skills/add";
     }
 
     @PostMapping("add")
@@ -36,10 +36,10 @@ public class SkillController {
                                          Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("skill", newSkill);
-            return "skill/add";
+            model.addAttribute("skills", newSkill);
+            return "skills/add";
         }
-        model.addAttribute("skill", newSkill);
+        model.addAttribute("skills", newSkill);
         skillRepository.save(newSkill);
         return "redirect:";
     }
@@ -50,8 +50,8 @@ public class SkillController {
         Optional<Skill> optSkill = skillRepository.findById(skillId);
         if (optSkill.isPresent()) {
             Skill skill = (Skill) optSkill.get();
-            model.addAttribute("skill", skill);
-            return "skill/view";
+            model.addAttribute("skills", skill);
+            return "skills/view";
         } else {
             return "redirect:../";
         }
